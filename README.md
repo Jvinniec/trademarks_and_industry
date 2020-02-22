@@ -30,7 +30,7 @@ A potentially better way to predict the recovery of the market after a crash is 
 * As the economy improves, entrepreneurs and investors are more optimistic about starting new businesses
   * Trademark filings increase in anticipation of the creation of said businesses (i.e. trademarks precede new businesses)
 
-In the following figures it's obvious that the rate of trademark filing in the U.S. (purple) correlates more strongly with the market prices than rate of new businesses (blue).
+In the following figures it's obvious that the rate of trademark filing in the U.S. (*yellow dashed*) correlates more strongly with the market prices than rate of new businesses (*blue dashed*). For comparison, the number of private sector jobs (*green dashed*) is also shown, as it is typically used to measure the health of the economy.
 
 <figure>
   <img src="images/trademarks_and_markets.png"/>
@@ -46,7 +46,11 @@ In the following figures it's obvious that the rate of trademark filing in the U
   </center>
 </figure>
 
-This suggests that the rate of trademark filings could be an indicator of optimism/pessimism about the markets and thus predictive of market changes. What's more, trademarks are typically assigned one or more [classifications](https://www.uspto.gov/trademark/trademark-updates-and-announcements/nice-agreement-tenth-edition-general-remarks-class) based on the intended uses. This allows a more fine grained approach to making industry-specific predictions. For instance, the following plot shows that the construction industry appears to have peaked more strongly before and recovered slightly slower than other industries after the recession in the late 2000's. This likely reflects the housing bubble and it's subsequent burst around this time.
+It is clear that 'trademark filings' and 'private sector jobs' both correlate strongly with the market. This suggests that the rate of trademark filings could be an indicator of optimism/pessimism about the markets and thus predictive of market changes. However, monitoring trademarks has two distinct advantages:
+* Trademark data is released on a daily basis, while job numbers are only available every month.
+* Trademark numbers are far more robust, while Job numbers are often revised in subsequent months.
+
+What's more, trademarks are typically assigned one or more [classifications](https://www.uspto.gov/trademark/trademark-updates-and-announcements/nice-agreement-tenth-edition-general-remarks-class) based on the intended uses. This allows a more fine grained approach to making industry-specific predictions. For instance, the following plot shows that the construction industry appears to have peaked more strongly before and recovered slightly slower than other industries after the recession in the late 2000's. This likely reflects the housing bubble and it's subsequent burst around this time.
 
 <figure>
   <img src="images/trademarks_filed_by_industry.png"/>
