@@ -12,7 +12,7 @@ Here I document my proposed project for the Data Incubator program. The plots be
 
 ## Introduction
 
-The number of newly founded establishments has been shown to correlate somewhat with the trends in the market indices.
+The number of newly founded establishments has been shown to correlate somewhat with the trends in the market indices. This has been discussed in the past (see [this 2004 article](https://www.nytimes.com/2004/04/05/business/patents-trademark-applications-one-theory-economic-gauge-remain-low-some-sectors.html) in The New York Times).
 
 <figure>
   <img src="images/bdm_chart1.png"/>
@@ -109,7 +109,7 @@ It should be noted that the raw data on trademark filings contains information o
 ## Data Sources
 
 ### Trademark Filings
-Data on trademark filing in the United States is made public by the United States Patent and Trademark Office (USPTO). Specifically, the USPTO provides access to the text, [Nice classifications](https://en.wikipedia.org/wiki/International_(Nice)_Classification_of_Goods_and_Services), and other filing data for trademark applications ([historical](https://developer.uspto.gov/product/trademark-annual-xml-applications) and [daily](https://developer.uspto.gov/product/trademark-daily-xml-file-tdxf-applications#product-files)).
+Data on trademark filing in the United States is made public by the United States Patent and Trademark Office (USPTO). Specifically, the USPTO provides access to the text, [Nice classifications](https://en.wikipedia.org/wiki/International_(Nice)_Classification_of_Goods_and_Services), and other filing data for trademark applications ([historical](https://developer.uspto.gov/product/trademark-annual-xml-applications) and [daily](https://developer.uspto.gov/product/trademark-daily-xml-file-tdxf-applications#product-files)). A breakdown of the XML file structure and the pieces that are likely to be used in this project is shown [here](data/transcript_data.md).
 
 ### Market Data
 Because of the nature of this project, real-time market data is unnecessary. At best, daily market values should suffice to achieve the end goal. These can be obtained (freely) through the [Alpha Vantage API](https://www.alphavantage.co/documentation/). This API allows accessing open, close, high, and low price data as well as trading volume for a host of market symbols.
