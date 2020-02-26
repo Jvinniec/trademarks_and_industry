@@ -12,18 +12,18 @@ Here I document my proposed project for the Data Incubator program. The plots be
 
 ## Introduction
 
-The number of newly founded establishments has been shown to correlate somewhat with the trends in the market indices. This has been discussed in the past (see [this 2004 article](https://www.nytimes.com/2004/04/05/business/patents-trademark-applications-one-theory-economic-gauge-remain-low-some-sectors.html) in The New York Times).
+The number of newly founded establishments has been shown to correlate somewhat with the trends in the market indices.
 
 <figure>
   <img src="images/bdm_chart1.png"/>
   <center>
-    <figcaption><i>Rate of new business creation by year</i></figcaption>
+    <figcaption><i>Fig 1. Rate of new business creation by year</i></figcaption>
   </center>
 </figure>
 
 The figure above shows that the number of young companies takes a noticeable downturn before and during both the 'Dot-com crash' in 2001 and the recession in late 2007. However, the drop in new businesses appears to decline even after the economy begins to recover.
 
-A potentially better way to predict the recovery of the market after a crash is to use the rate of trademark filings. The rational is as follows:
+A potentially better way to predict the recovery of the market after a crash is to use the rate of trademark filings. This has been discussed in the past (see [this 2004 article](https://www.nytimes.com/2004/04/05/business/patents-trademark-applications-one-theory-economic-gauge-remain-low-some-sectors.html) in The New York Times). The rational is as follows:
 * As the economy worsens, the expectation that a new business will be successful is much lower. Thus:
   * Investors invest in fewer new businesses
   * Individuals don't start new businesses and the number of trademarks filed declines
@@ -35,14 +35,14 @@ In the following figures it's obvious that the rate of trademark filing in the U
 <figure>
   <img src="images/trademarks_and_markets.png"/>
   <center>
-    <figcaption><i>Normalized filing rates, market prices, and newly established businesses between 1994-2015 (data from: data/preliminary_data.csv)</i></figcaption>
+    <figcaption><i>Fig 2. Normalized filing rates, market prices, and newly established businesses between 1994-2015 (data from: data/preliminary_data.csv)</i></figcaption>
   </center>
 </figure>
 
 <figure>
   <img src="images/measure_correlations.png"/>
   <center>
-    <figcaption><i>Correlation plots between various markets (x-axis) and test measures (y-axis)</i></figcaption>
+    <figcaption><i>Fig 3. Correlation plots between various markets (x-axis) and test measures (y-axis)</i></figcaption>
   </center>
 </figure>
 
@@ -55,7 +55,7 @@ What's more, trademarks are typically assigned one or more [classifications](htt
 <figure>
   <img src="images/trademarks_filed_by_industry.png"/>
   <center>
-    <figcaption><i>Normalized count of trademarks filed by industry, data available since 2004</i></figcaption>
+    <figcaption><i>Fig 4. Normalized count of trademarks filed by industry, data available since 2004</i></figcaption>
   </center>
 </figure>
 
@@ -75,7 +75,7 @@ The goal of this project is to see if we can use the rate at which trademarks ar
 
 Initial data pipeline
 * [ ] Daily data downloader
-* [ ] Read/parse the data into a database containing only the useful components
+* [x] Read/parse the data into a database containing only the useful components
 * [ ] Define and extract informative metrics based on the data
   * Filing rate by industry
   * Weighting by industry sub-classes
@@ -87,11 +87,12 @@ Determine the best approach to modeling industry changes
 
 Dashboard for viewing predictions
 * [ ] Change in the above metrics over time
-* [ ] Present predictions from above mo
+* [ ] Present predictions from above modeling
 
 Improvements should time permit
 * [ ] Identify potentially connected industries (e.g. shared keywords in descriptions)
-* [ ] Incorporate trademark rejection rates
+* [ ] Incorporate trademark rejection rates to identify industry saturation
+* [ ] Showcase filing by region (city, state, country)
 
 
 ### Expected Outcomes
