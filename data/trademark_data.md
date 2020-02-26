@@ -1,5 +1,5 @@
-# Transcript Filing Data
-The transcript filing data can be downloaded from the United States Patents and Trademarks Office (USPTO) here:
+# Trademark Filing Data
+The trademark filing data can be downloaded from the United States Patents and Trademarks Office (USPTO) here:
 * Historical: https://developer.uspto.gov/product/trademark-annual-xml-applications
 * Daily: https://developer.uspto.gov/product/trademark-daily-xml-file-tdxf-applications#product-files
 
