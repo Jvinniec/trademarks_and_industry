@@ -1,0 +1,12 @@
+
+
+# ======
+# Ignore data directories
+data/processed
+data/trademarks_raw_daily
+data/trademarks_raw_annual
+
+# ======
+# Ignore extra directories
+**/__pycache__
+**/.DS_Store
