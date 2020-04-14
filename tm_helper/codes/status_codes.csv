@@ -1,4 +1,4 @@
-Code,Live/Dead/Indifferent,Code Definition
+code,status,definition
 000,Indifferent,UNKNOWN
 400,Dead/Cancelled,IR CANCELLED; APPLICATION PENDING TRANSFORMATION
 401,Dead/Cancelled,IR CANCELLED - NO TRANSFORMATION FILED
