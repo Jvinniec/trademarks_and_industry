@@ -9,6 +9,7 @@ Here I document my proposed project for the Data Incubator program. The plots be
 - [Data Sources](#data-sources)
   - [Trademark Filings](#trademark-filings)
   - [Market Data](#market-data)
+- [July 2019](#july-2019)
 
 ## Introduction
 
@@ -76,18 +77,16 @@ The goal of this project is to see if we can use the rate at which trademarks ar
 Initial data pipeline
 * [ ] Daily data downloader
 * [x] Read/parse the data into a database containing only the useful components
-* [ ] Define and extract informative metrics based on the data
+* [x] Define and extract informative metrics based on the data
   * Filing rate by industry
   * Weighting by industry sub-classes
 
 Determine the best approach to modeling industry changes
-* [ ] Simplest: Functional approximation
 * [ ] Medium difficulty: Simple ML model
-* [ ] Most complex: Deep learning neural network (RNNs, LSTM networks, etc...)
 
 Dashboard for viewing predictions
 * [ ] Change in the above metrics over time
-* [ ] Present predictions from above modeling
+* [x] Present predictions from above modeling
 
 Improvements should time permit
 * [ ] Identify potentially connected industries (e.g. shared keywords in descriptions)
@@ -114,3 +113,7 @@ Data on trademark filing in the United States is made public by the United State
 
 ### Market Data
 Because of the nature of this project, real-time market data is unnecessary. At best, daily market values should suffice to achieve the end goal. These can be obtained (freely) through the [Alpha Vantage API](https://www.alphavantage.co/documentation/). This API allows accessing open, close, high, and low price data as well as trading volume for a host of market symbols. A demonstration on how I plan to get this data is shown [here](notebooks/get_market_data.ipynb).
+
+## July 2019
+One particularly interesting period of time surrounding trademark filing rates occurs in July 2019. During this time a rapid increase in the number of filings from foreign sources (particularly from China). This is most likely due to a policy change at the USPTO that starting August 3, 2019 all trademarks filed from abroad would have to be done through an attorney licensed in the US. Because this would infer a non-trivial increase in filing cost for foreign businesses, a surge of filings appears before this rule went into affect in order to get ahead of it.
+https://www.uspto.gov/trademark/laws-regulations/trademark-rule-requires-foreign-applicants-and-registrants-have-us
