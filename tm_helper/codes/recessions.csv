@@ -1,3 +1,16 @@
-year_start, year_stop, description
-2001.16667, 2001.91667, Dot-com crash
-2007.91667, 2009.5, Great Recession
+start_year,start_month,stop_year,stop_month,description
+1929,08,1933,03,The Great Depression
+1937,05,1938,06,The Roosevelt Recession
+1945,02,1945,10,The Union Recession
+1948,11,1949,10,The Post-War Recession
+1953,07,1954,05,The Post-Korean War Recession
+1957,08,1958,04,The Eisenhower Recession
+1960,04,1961,02,The "Rolling Adjustment" Recession
+1969,12,1970,11,The Nixon Recession
+1973,11,1975,03,The Oil Crisis Recession
+1980,01,1980,07,The Energy Crisis Recession
+1981,07,1982,11,The Iran/Energy Crisis Recession
+1990,07,1991,03,The Gulf War Recession
+2001,03,2001,11,Dot-com crash
+2007,12,2009,06,Great Recession
+2020,02,2020,12,Corona Virus Recession

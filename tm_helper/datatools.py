@@ -10,7 +10,6 @@ from bokeh.plotting import figure
 
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 from statsmodels.tsa.x13 import x13_arima_analysis, x13_arima_select_order
-
 class TmDataTools:
     
     def __init__(self, figsize=(12,7)):
@@ -112,7 +111,7 @@ class TmDataTools:
         Pandas DataFrame with columns scaled
         """
         # Define the scaler object
-        scaler = StandardScaler()
+        scaler = StandardScaler(with_mean=False)
         for col in dframe.columns:
             dframe[col] = scaler.fit_transform(dframe[col].values.reshape(-1,1))
 
@@ -171,6 +170,8 @@ class TmDataTools:
                 processed_data = processed_data.resample(agg).sum()
             elif aggmethod == 'mean':
                 processed_data = processed_data.resample(agg).mean()
+            elif aggmethod == 'last':
+                processed_data = processed_data.resample(agg).last()
 
         # Remove seasonal affects in the data
         processed_data = self.deseason(processed_data, method=method, 
@@ -182,7 +183,7 @@ class TmDataTools:
 
         return processed_data
 
-    def plot_industries(self, dframe, recess=True, norm=False):
+    def plot_industries(self, dframe, recess=True, norm=False, highlight=None):
         """ Plot the industry breakdown with options. The process is as follows:
 
         Parameters
@@ -193,12 +194,19 @@ class TmDataTools:
             Overplot recession dates
         """
         # normalize if requested
-        plot_data = dframe
+        plot_data = dframe.copy()
         if norm:
             plot_data = self.scale_data(plot_data) 
 
         # Now do the plotting
-        ax = plot_data.plot(figsize=self._figsize)
+        if highlight is None:
+            ax = plot_data.plot(figsize=self._figsize)
+        else:
+            name_color = highlight.split(':')
+            highlight_col = plot_data[[highlight]]
+            plot_data = plot_data.drop([highlight], axis=1)
+            ax = plot_data.plot(figsize=self._figsize, color='gray',legend=False)
+            highlight_col.plot(ax=ax, color='red')
 
         # Add y-grid lines
         ax.yaxis.grid()
@@ -213,37 +221,39 @@ class TmDataTools:
         return ax
 
 
-    def get_subsets(self, primary_df, secondary_df=[],
+    #def get_subset(self, df,nrows,min_date, max_date):
+
+
+
+    def get_subsets(self, primary_df,
                     nrows_primary=3,
-                    nrows_secondary=[],
                     min_date=dt.datetime(1980,1,1),
-                    max_date=None,
-                    forecast_time=dt.timedelta(weeks=0)):
+                    max_date=None):
         """ Chop data from each dataset up into datasets
 
         Parameters
         ----------
         primary_df: pandas.DataFrame()
-        secondary_df: list
-            List of secondary pandas.DataFrame objects
+            Primary dataframe
         nrows_primary: int
             Number of rows 
         Returns
         -------
         """
+        pdf_cpy = primary_df.copy()
 
-        # Define a function for getting the number of rows
-        if isinstance(nrows_secondary, list):
-            get_rows = lambda x: nrows_secondary[x]
-        elif isinstance(nrows_secondary, int):
-            get_rows = lambda x: nrows_secondary
-        else:
-            raise TypeError(f'Unsupported type for nrows_secondary: {type(nrows_secondary)}')
-
+        # Normalize the values in the primary dataframe
+        for d,date in enumerate(pdf_cpy.index):
+            if d == 0:
+                continue
+            # Precompute the scaled data values
+            pdf_cpy.iloc[d] = (primary_df.iloc[d] - primary_df.iloc[d-1]) / abs(primary_df.iloc[d-1])
+            
         # Slice the data into subsets
         datasets = []
         dates    = []
-        for d,date in enumerate(primary_df.index):
+        for d,date in enumerate(pdf_cpy.index):
+            
             # Skip it if date is too low
             if date < min_date:
                 continue
@@ -251,63 +261,47 @@ class TmDataTools:
             elif (max_date is not None) and date >= max_date:
                 break
             
-            # Append this date
-            dates.append(date)
+            # Compute the distribution of the lastest nrows
+            start = d-nrows_primary
+            ind_values = []
+            for c,col in enumerate(pdf_cpy.columns):
 
-            # Trim out the values above this date
-            primary_subset = primary_df[primary_df.index < date]
-            #primary_subset = self.deseason(primary_subset, method=method, doplot=False)
-            
-            # Compute the distribution of the lastest nrows         
-            primary_vals = (primary_subset.iloc[d-nrows_primary:,:].values /
-                            primary_subset.iloc[d-nrows_primary-1,:].values.reshape(-1))
-
-            # Create an array of entries
-            data_entry = primary_vals.reshape(-1)
-
-            for s,secondary in enumerate(secondary_df):
-                # Get the secondary dataframe
-                secondary_subset = secondary[secondary.index < date]
-                start_indx = len(secondary_subset.index) - get_rows(s)
-                secondary_vals = (secondary_subset.iloc[start_indx:,:].values /
-                                  secondary_subset.iloc[start_indx-1,:].values.reshape(-1))
-
-                # Merge rows from primary and secondary subsets
-                data_entry = np.append(data_entry, secondary_vals)
-
-            # Append a column if this date is a recession
-            #is_recess = self._codes.is_recession(date, forecast_time=dt.timedelta(weeks=0))
-            #data_entry = np.append(data_entry, is_recess)
-
-            datasets.append(data_entry)
-
-        # Extract the labels
-        #curr_recess = self._codes.is_recession(dates, forecast_time=dt.timedelta(weeks=0))
-        labels = self._codes.is_recession(dates, forecast_time=forecast_time)
-        #labels = future_recess*2 + curr_recess
-
-        return np.array(datasets), np.array(labels), dates
+                primary_vals = pdf_cpy.iloc[start:d,c].values
+                ind_values.append(primary_vals.reshape(-1))
+                dates.append(date)
+                
+            datasets.extend(ind_values)
+        return np.array(datasets), dates
 
 
     def market_change(self, markets, dates, 
-                      forecast_time=dt.timedelta(weeks=1),
-                      up_or_down=True):
+                      forecast_time=dt.timedelta(weeks=0),
+                      backcast_time=dt.timedelta(weeks=0),
+                      up_or_down=True,
+                      norm=True):
 
         # Normalize the market data
-        normed = self.scale_data(markets)
+        if norm:
+            normed = self.scale_data(markets)
+        else:
+            normed = markets
 
         labels = np.zeros(len(dates))
 
         # Return the requested values
         for d,date in enumerate(dates):
+            backcast = date + backcast_time
             forecast = date + forecast_time
+            
             # Average of the market indices
-            cur_val = np.mean(normed[normed.index >= date].iloc[0,:].values)
-            future_val = np.mean(normed[normed.index >= forecast].iloc[0,:].values)
-            labels[d] = future_val/cur_val
+            cur_val = np.mean(normed[normed.index >= backcast].iloc[0].values)
+            future_val = np.mean(normed[normed.index >= forecast].iloc[0].values)
+            labels[d] = future_val-cur_val
+
+            #print(backcast, forecast, labels[d])
 
         # Check if we just want the up or down status of the indices
         if up_or_down:
-            labels = np.array([int(l>=1) for l in labels])
+            labels = np.array([int(l<=0) for l in labels])
 
         return labels
